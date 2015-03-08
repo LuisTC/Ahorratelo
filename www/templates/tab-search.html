@@ -1,0 +1,35 @@
+<ion-view view-title="Búsqueda">
+	<ion-content>
+		<ion-list>
+			<form name="search_form" ng-action="#/tab/search/{{range}}" ng-submit="filter(data)">
+				<div class="item item-divider">Fecha inicial</div>
+	        		<div class="item item-body">
+	          			<input class="button button-block button-positive" 
+	          					type="date" 
+	          					name="start_date"
+	          					ng-max="data.end_date" 
+	          					ng-model="data.start_date"
+	          					required>
+	          		</div>
+	
+	          		<div class="item item-divider">Fecha final</div>
+	        		<div class="item item-body">
+	          			<input class="button button-block button-positive" 
+	          					type="date" 
+	          					name="end_time" 
+	          					ng-min="data.sart_date"
+	          					ng-model="data.end_date"
+	          					required>
+	          		</div>
+	
+				<div class="item item-divider"></div>
+        		<div class="item item-body">
+        			<input class="button button-block button-positive"
+        					type="submit" 
+        					ng-disabled="search_form.$invalid" 
+        					value="Buscar">
+        		</div>
+        	</form>
+		</ion-list>
+	</ion-content>
+</ion-view>

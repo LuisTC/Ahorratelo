@@ -1,0 +1,42 @@
+<ion-view view-title="Entrada">
+  	<ion-content>
+    	<ion-list>
+    		<form ng-submit="insert(expense)" name="input_form" id="input_form">
+    			<div class="item item-divider">Fecha</div>
+        		<div class="item item-body">
+          			<input class="button button-block button-positive" 
+          				type="date" 
+          				name="infodate" 
+          				ng-model="expense.infodate"
+          				required>
+          	</div>
+
+        		<div class="item item-divider">Categoria</div>
+        		<div class="item item-body">
+        		  	<select class="button select-block button-positive" ng-model="expense.category_id" required>
+        		    	<option 
+        		    		value={{category.category_id}} 
+        		    		ng-repeat="category in categories">
+        		      		{{category.name}}
+        		    	</option>
+        		  	</select>
+        		</div>
+
+        		<div class="item item-divider">Monto</div>
+        		<div class="item item-body">
+          			<input class="button button-block button-positive" 
+          				type="number" 
+          				ng-model="expense.amount"
+          				ng-min="min"
+                  ng-max="max"
+          				required>
+          		</div>
+
+				<div class="item item-divider"></div>
+        		<div class="item item-body">
+        			<input class="button button-block button-positive" type="submit" ng-disabled="input_form.$invalid" value="Agregar">
+        		</div>
+    		</form>
+    	</ion-list>
+  	</ion-content>
+</ion-view>
