@@ -12,6 +12,8 @@ angular.module('starter.controllers', [])
 
 	$scope.insert = function(expense) {
     	Expense.insert(expense).then(function(result) {
+    		$scope.expense = {};
+
       		$cordovaToast.show('Se ha agregado correctamente', 'short', 'center');
     	}, function(err) {
     		console.log(err);

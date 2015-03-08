@@ -4,12 +4,11 @@
 			<ion-item 
 				class="item item-avatar item-icon-right" 
 				ng-repeat="expense in expenses" 
-				type="item-text-wrap" 
-				href="#/tab/search/detail/{{expense.expense_id}}">
+				type="item-text-wrap">
 
 				<img 
 					id="{{expense.category_id}}"
-					ng-src="{{expense.url}}">
+					ng-src=".{{expense.url}}">
 
 				<h2>{{expense.name}}</h2>
 				<h2>{{convert(expense.infodate)}}</h2>
