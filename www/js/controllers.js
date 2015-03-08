@@ -44,6 +44,6 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.currency = function(quantity) {
-		return 'RD$ ' + quantity.toFixed(2);
+		return '$ ' + quantity.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 	}
 })
