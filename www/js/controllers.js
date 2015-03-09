@@ -3,20 +3,19 @@ angular.module('starter.controllers', [])
 .controller('InputCtrl', function($ionicPlatform, $cordovaToast, $scope, Category, Expense) {
 	$scope.min = 1;
 	$scope.max = 1000000;
-
-	$ionicPlatform.ready(function() {
-		Category.all().then(function(result) {
-			$scope.categories = result;
-		});
-  	});
+	$scope.categories = {};
+	$scope.expense = {};
+	
+	Category.all().then(function(result) {
+		$scope.categories = result;
+	}, function(err) {
+		console.log(err);
+	});
 
 	$scope.insert = function(expense) {
     	Expense.insert(expense).then(function(result) {
-    		$scope.expense = {};
-
       		$cordovaToast.show('Se ha agregado correctamente', 'short', 'center');
     	}, function(err) {
-    		console.log(err);
       		$cordovaToast.show(err, 'short', 'center');
     	});
 	};

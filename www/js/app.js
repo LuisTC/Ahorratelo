@@ -1,3 +1,5 @@
+var circle;
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -13,7 +15,7 @@ angular.module('starter', [
   'starter.database'
 ])
 
-.run(function($ionicPlatform, DB, Expense) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -24,8 +26,38 @@ angular.module('starter', [
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+  });
+})
 
-    DB.init();
+.run(function($ionicPlatform, $cordovaSplashscreen, DB) {
+  circle = new ProgressBar.Circle('#progress-bar', {
+    color: '#000000',
+    // This has to be the same size as the maximum width to
+    // prevent clipping
+    strokeWidth: 10,
+    trailWidth: 1,
+    easing: 'easeInOut',
+    duration: 2500,
+
+    from: { color: '#aaa', width: 1 },
+    to: { color: '#666', width: 10 },
+    // Set default step function for all animate calls
+    step: function(state, circle) {
+        circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+    }, 
+    step: function(state, bar){
+      bar.setText((bar.value() * 100).toFixed(0))
+    }
+  });
+
+  DB.init().then(function() {
+    circle.animate(1, function() {
+      $('#progress-bar').hide();
+      $('.app').show();
+    });
+  }, function(err) {
+    console.log(err);
   });
 })
 
@@ -38,7 +70,7 @@ angular.module('starter', [
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"

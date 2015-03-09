@@ -38,14 +38,18 @@ angular.module('starter.services', [])
 
 .factory('DB', function($q, $window, $cordovaSQLite, $localStorage, DB_CONFIG, DB_DATA) {
   var self = this;
-  self.db = null;
+  self.db;
 
   self.init = function() {
+    var q = $q.defer();
+
     try {
       self.db = $cordovaSQLite.openDB({ name: DB_CONFIG.name });
     } catch(err) {
       self.db = $window.openDatabase(DB_CONFIG.name, '1.0', 'database', 1);
     }
+
+    q.resolve(self.db);
 
     if(!$localStorage.get('loaded', false)) {
       self.create(DB_CONFIG.tables);
@@ -53,10 +57,12 @@ angular.module('starter.services', [])
       
       $localStorage.set('loaded', true);
     }
+
+    return q.promise;
   };
 
   self.query = function(query, bindings) {
-    bindings = (bindings !== undefined) ? bindings : [];
+    bindings = typeof bindings !== 'undefined' ? bindings : [];
     var deferred = $q.defer();
 
     self.db.transaction(function(transaction) {
